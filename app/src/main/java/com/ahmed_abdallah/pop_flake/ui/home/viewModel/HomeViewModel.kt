@@ -1,4 +1,4 @@
-package com.ahmed_abdallah.pop_flake.ui.home
+package com.ahmed_abdallah.pop_flake.ui.home.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
