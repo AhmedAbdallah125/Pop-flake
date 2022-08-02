@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.ahmed_abdallah.pop_flake.R
 import com.ahmed_abdallah.pop_flake.databinding.FragmentSettingBinding
 
 class SettingFragment : Fragment() {
@@ -27,12 +29,23 @@ class SettingFragment : Fragment() {
 
         _binding = FragmentSettingBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        initExposeMenu()
 
-        val textView: TextView = binding.textNotifications
-        settingViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    }
+
+    private fun initExposeMenu() {
+        val themes = resources.getStringArray(R.array.themes)
+        val adapter = ArrayAdapter(requireContext(), R.layout.list_item, themes)
+        binding.autoText.apply {
+            setAdapter(adapter)
+            setOnItemClickListener { _, _, position, _ ->
+                Toast.makeText(requireContext(), "$position", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onDestroyView() {
