@@ -1,22 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+   android:layout_width="220dp"
+    android:layout_height="wrap_content"
+    >
+<androidx.cardview.widget.CardView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/padding_card"
+    android:paddingHorizontal="16dp"
+    app:cardUseCompatPadding="true"
     app:cardCornerRadius="@dimen/corner_radius_card"
-    app:cardElevation="@dimen/card_elevation">
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+      >
 
         <ImageView
             android:id="@+id/img_movie"
-            android:layout_width="0dp"
+            android:layout_width="180dp"
             android:layout_height="0dp"
+            android:scaleType="center"
             app:layout_constraintBottom_toTopOf="@+id/guideline2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -25,10 +35,10 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline2"
             app:srcCompat="@drawable/ic_baseline_star_rate_24" />
@@ -44,9 +54,9 @@
             android:id="@+id/txt_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="4dp"
             android:text="7"
-            android:textSize="@dimen/fontHeading3"
+            android:textSize="@dimen/fontHeading5"
             app:layout_constraintBottom_toBottomOf="@+id/imageView"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toTopOf="@+id/imageView" />
@@ -55,11 +65,9 @@
             android:id="@+id/txt_movie_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="61dp"
+            android:layout_marginTop="8dp"
             android:text="Bullet"
-            android:textSize="@dimen/fontHeading1"
-            app:layout_constraintBottom_toTopOf="@+id/date_movie"
+            android:textSize="@dimen/fontHeading4"
             app:layout_constraintStart_toStartOf="@+id/imageView"
             app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -67,22 +75,23 @@
             android:id="@+id/date_movie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
             android:text="2022 15 "
-            android:textSize="@dimen/fontHeading3"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/txt_movie_name" />
+            android:textSize="@dimen/fontHeading6"
+            app:layout_constraintStart_toStartOf="@+id/txt_movie_name"
+            app:layout_constraintTop_toBottomOf="@+id/txt_movie_name" />
 
         <TextView
             android:id="@+id/txt_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginStart="2dp"
             android:text=" 2 h 6m"
-            android:textSize="@dimen/fontHeading3"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="@dimen/fontHeading6"
+            android:paddingBottom="16dp"
+            android:paddingEnd="16dp"
             app:layout_constraintStart_toEndOf="@+id/date_movie"
             app:layout_constraintTop_toTopOf="@+id/date_movie" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
+</LinearLayout>
