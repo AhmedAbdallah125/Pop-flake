@@ -4,4 +4,15 @@
     <string name="title_search">search</string>
     <string name="title_setting">setting</string>
     <string name="in_theatres">In theatres</string>
+    <string name="coming_soon">Coming Soon</string>
+    <string name="top_rating">Top Rating</string>
+    <string name="search_title">Search Pop-flake</string>
+    <string name="search">search</string>
+    <string name="appearance">Appearance</string>
+    <string name="app_theme">App Theme</string>
+
+    <string-array name="themes">
+        <item>Light</item>
+        <item>Dark</item>
+    </string-array>
 </resources>
