@@ -33,16 +33,21 @@ class ComingAdapter : RecyclerView.Adapter<ComingAdapter.ComingViewHolder>() {
             with(binding) {
                 txtMovieName.text = movie.title ?: "None"
                 handleRatingViews(this)
+                dateMovie.text = movie.year
+                movie.year?.let{
+                    dateMovie.text = it
+                }
             }
         }
 
         private fun handleRatingViews(binding: MovieLayoutBinding) {
-            movie.imDbRating?.let {
-                changeVisibility(true, binding)
-                binding.txtRating.text = it
-            } ?: run {
-                changeVisibility(false, binding)
-            }
+//            movie.imDbRating?.let {
+//                changeVisibility(true, binding)
+//                binding.txtRating.text = it
+//            } ?: run {
+//                changeVisibility(false, binding)
+//            }
+            changeVisibility(true,binding)
         }
 
         private fun changeVisibility(isRatingNull: Boolean, binding: MovieLayoutBinding) {

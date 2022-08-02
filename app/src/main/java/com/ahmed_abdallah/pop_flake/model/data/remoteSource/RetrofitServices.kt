@@ -1,8 +1,9 @@
 package com.ahmed_abdallah.pop_flake.model.data.remoteSource
 
-import com.ahmed_abdallah.pop_flake.pojo.BoxOfficeMovie
 import com.ahmed_abdallah.pop_flake.pojo.MovieAPI
-import com.ahmed_abdallah.pop_flake.pojo.TopRatedMovie
+import com.ahmed_abdallah.pop_flake.pojo.SearchResultAPI
+import com.ahmed_abdallah.pop_flake.pojo.TopMoviesOfficeAPI
+import com.ahmed_abdallah.pop_flake.pojo.TopRatedMovieAPI
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -24,9 +25,15 @@ interface RetrofitServices {
     @GET("Top250Movies")
     suspend fun getTop250Movies(
         @Query("apiKey") apiKey: String = APIKEY
-    ): Response<TopRatedMovie>
+    ): Response<TopRatedMovieAPI>
+
     @GET("BoxOffice")
     suspend fun getBoxOfficeMovies(
         @Query("apiKey") apiKey: String = APIKEY
-    ): Response<BoxOfficeMovie>
+    ): Response<TopMoviesOfficeAPI>
+
+    @GET("SearchTitle")
+    suspend fun searchForMovieOrSeries(
+        @Query("apiKey") apiKey: String = APIKEY, @Query("expression") searchKey: String
+    ): Response<SearchResultAPI>
 }

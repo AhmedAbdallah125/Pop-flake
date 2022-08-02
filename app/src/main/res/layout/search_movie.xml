@@ -21,29 +21,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/movie_year"
+        app:layout_constraintBottom_toTopOf="@+id/movie_description"
         app:layout_constraintStart_toEndOf="@+id/movie_img"
-        app:layout_constraintTop_toTopOf="@id/movie_img" />
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
-        android:id="@+id/movie_year"
+        android:id="@+id/movie_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/movie_actors"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/movie_title"
         app:layout_constraintTop_toBottomOf="@+id/movie_title" />
-
-    <TextView
-        android:id="@+id/movie_actors"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/movie_img"
-        app:layout_constraintStart_toStartOf="@+id/movie_year"
-        app:layout_constraintTop_toBottomOf="@+id/movie_year" />
 </androidx.constraintlayout.widget.ConstraintLayout>

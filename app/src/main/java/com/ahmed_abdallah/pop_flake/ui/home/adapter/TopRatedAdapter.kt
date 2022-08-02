@@ -7,14 +7,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ahmed_abdallah.pop_flake.databinding.MovieLayoutBinding
 import com.ahmed_abdallah.pop_flake.pojo.Movie
+import com.ahmed_abdallah.pop_flake.pojo.TopRatedMovie
 import com.bumptech.glide.Glide
 
 class TopRatedAdapter : RecyclerView.Adapter<TopRatedAdapter.TopRatedViewHolder>() {
 
-    private var movies: List<Movie> = emptyList()
+    private var movies: List<TopRatedMovie> = emptyList()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setMoviesTopRated(movies: List<Movie>) {
+    fun setMoviesTopRated(movies: List<TopRatedMovie>) {
         this.movies = movies
         notifyDataSetChanged()
     }
@@ -32,6 +33,9 @@ class TopRatedAdapter : RecyclerView.Adapter<TopRatedAdapter.TopRatedViewHolder>
             with(binding) {
                 txtMovieName.text = movie.title ?: "None"
                 handleRatingViews(this)
+                movie.year?.let{
+                    dateMovie.text = it
+                }
             }
         }
 

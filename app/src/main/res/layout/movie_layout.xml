@@ -24,7 +24,7 @@
 
         <ImageView
             android:id="@+id/img_movie"
-            android:layout_width="180dp"
+            android:layout_width="160dp"
             android:layout_height="0dp"
             android:scaleType="center"
             app:layout_constraintBottom_toTopOf="@+id/guideline2"
@@ -55,7 +55,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="7"
             android:textSize="@dimen/fontHeading5"
             app:layout_constraintBottom_toBottomOf="@+id/imageView"
             app:layout_constraintStart_toEndOf="@+id/imageView"
@@ -66,7 +65,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Bullet"
             android:textSize="@dimen/fontHeading4"
             app:layout_constraintStart_toStartOf="@+id/imageView"
             app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -76,7 +74,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="2022 15 "
             android:textSize="@dimen/fontHeading6"
             app:layout_constraintStart_toStartOf="@+id/txt_movie_name"
             app:layout_constraintTop_toBottomOf="@+id/txt_movie_name" />
@@ -86,7 +83,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
-            android:text=" 2 h 6m"
             android:textSize="@dimen/fontHeading6"
             android:paddingBottom="16dp"
             android:paddingEnd="16dp"

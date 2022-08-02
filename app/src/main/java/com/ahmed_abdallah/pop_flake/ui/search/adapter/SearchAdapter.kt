@@ -5,15 +5,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ahmed_abdallah.pop_flake.databinding.SearchMovieBinding
-import com.ahmed_abdallah.pop_flake.pojo.TopRatedMovie
+import com.ahmed_abdallah.pop_flake.pojo.SearchResult
 import com.bumptech.glide.Glide
 
 class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
-    private var searchMovieList: List<TopRatedMovie> = emptyList()
+    private var searchResultList: List<SearchResult> = emptyList()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setSearchMovieList(searchMovieList: List<TopRatedMovie>) {
-        this.searchMovieList = searchMovieList
+    fun setSearchMovieList(searchResultList: List<SearchResult>) {
+        this.searchResultList = searchResultList
         notifyDataSetChanged()
     }
 
@@ -29,15 +29,14 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
         SearchViewHolder(SearchMovieBinding.inflate(LayoutInflater.from(parent.context)))
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
-        val item = searchMovieList[position]
+        val item = searchResultList[position]
         with(holder.binding) {
-            movieActors.text = item.crew
-            movieYear.text = item.year
+            movieDescription.text = item.description
             movieTitle.text = item.title
             Glide.with(root).load(item.image).into(movieImg)
         }
 
     }
 
-    override fun getItemCount() = searchMovieList.size
+    override fun getItemCount() = searchResultList.size
 }

@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.ahmed_abdallah.pop_flake.ui.search.SearchFragment"
+        android:name="com.ahmed_abdallah.pop_flake.ui.search.view.SearchFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search" />
 

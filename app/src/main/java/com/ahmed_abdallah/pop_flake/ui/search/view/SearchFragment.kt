@@ -1,16 +1,16 @@
-package com.ahmed_abdallah.pop_flake.ui.search
+package com.ahmed_abdallah.pop_flake.ui.search.view
 
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ahmed_abdallah.pop_flake.R
 import com.ahmed_abdallah.pop_flake.databinding.FragmentSearchBinding
-import com.ahmed_abdallah.pop_flake.pojo.TopRatedMovie
 import com.ahmed_abdallah.pop_flake.ui.search.adapter.SearchAdapter
+import com.ahmed_abdallah.pop_flake.ui.search.viewModel.SearchViewModel
 
 class SearchFragment : Fragment() {
 
@@ -21,13 +21,13 @@ class SearchFragment : Fragment() {
     private val binding get() = _binding!!
     private var _searchAdapter: SearchAdapter? = null
     private val searchAdapter get() = _searchAdapter!!
+
+    private val searchViewModel: SearchViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val searchViewModel =
-            ViewModelProvider(this).get(SearchViewModel::class.java)
 
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         return binding.root
@@ -36,7 +36,6 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
         initSearchRecycler()
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -83,32 +82,11 @@ class SearchFragment : Fragment() {
                 }
             setHasFixedSize(true)
         }
-        searchAdapter.setSearchMovieList(
-            arrayListOf(
-                TopRatedMovie(
-                    title = "Ahmed",
-                    crew = "nsbsha, jshjasjd",
-                    image = "https://m.media-amazon.com/images/M/MV5BMGIyNTI3NWItNTJkOS00MGYyLWE4NjgtZDhjMWQ4Y2JkZTU5XkEyXkFqcGdeQXVyNjY1MTg4Mzc@._V1_UX128_CR0,3,128,176_AL_.jpg"
-                ),
-                TopRatedMovie(
-                    title = "Mohamed",
-                    crew = "nsbsha, jshjasjd",
-
-                    image = "https://m.media-amazon.com/images/M/MV5BMGIyNTI3NWItNTJkOS00MGYyLWE4NjgtZDhjMWQ4Y2JkZTU5XkEyXkFqcGdeQXVyNjY1MTg4Mzc@._V1_UX128_CR0,3,128,176_AL_.jpg"
-                ),
-                TopRatedMovie(
-                    title = "Ahmed",
-                    crew = "nsbsha, jshjasjd",
-
-                    image = "https://m.media-amazon.com/images/M/MV5BMGIyNTI3NWItNTJkOS00MGYyLWE4NjgtZDhjMWQ4Y2JkZTU5XkEyXkFqcGdeQXVyNjY1MTg4Mzc@._V1_UX128_CR0,3,128,176_AL_.jpg"
-                ),
-
-                )
-        )
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        _searchAdapter = null
     }
 }

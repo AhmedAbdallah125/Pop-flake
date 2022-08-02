@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ahmed_abdallah.pop_flake.databinding.FragmentHomeBinding
+import com.ahmed_abdallah.pop_flake.pojo.BoxOfficeMovie
 import com.ahmed_abdallah.pop_flake.pojo.Movie
+import com.ahmed_abdallah.pop_flake.pojo.TopRatedMovie
 import com.ahmed_abdallah.pop_flake.ui.home.adapter.BoxOfficeAdapter
 import com.ahmed_abdallah.pop_flake.ui.home.adapter.ComingAdapter
 import com.ahmed_abdallah.pop_flake.ui.home.adapter.InTheatreAdapter
@@ -36,13 +38,14 @@ class HomeFragment : Fragment() {
     private var _boxOfficeAdapter: BoxOfficeAdapter? = null
     private val boxOfficeAdapter get() = _boxOfficeAdapter!!
 
+    private val homeViewModel: HomeViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
@@ -68,6 +71,31 @@ class HomeFragment : Fragment() {
                     orientation = RecyclerView.HORIZONTAL
                 }
             setHasFixedSize(true)
+            comingAdapter.setMoviesComingSoon(
+                arrayListOf(
+                    Movie(
+                        title = "Ahmed",
+                        image = "https://m.media-amazon.com/images/M/MV5BMGIyNTI3NWItNTJkOS00MGYyLWE4NjgtZDhjMWQ4Y2JkZTU5XkEyXkFqcGdeQXVyNjY1MTg4Mzc@._V1_UX128_CR0,3,128,176_AL_.jpg"
+                    ),
+                    Movie(
+                        title = "Mohamed",
+                        image = "https://m.media-amazon.com/images/M/MV5BMGIyNTI3NWItNTJkOS00MGYyLWE4NjgtZDhjMWQ4Y2JkZTU5XkEyXkFqcGdeQXVyNjY1MTg4Mzc@._V1_UX128_CR0,3,128,176_AL_.jpg"
+                    ),
+                    Movie(
+                        title = "Ahmed",
+                        image = "https://m.media-amazon.com/images/M/MV5BMGIyNTI3NWItNTJkOS00MGYyLWE4NjgtZDhjMWQ4Y2JkZTU5XkEyXkFqcGdeQXVyNjY1MTg4Mzc@._V1_UX128_CR0,3,128,176_AL_.jpg"
+                    ),
+                    Movie(
+                        title = "Ahmed",
+                        image = "https://m.media-amazon.com/images/M/MV5BMGIyNTI3NWItNTJkOS00MGYyLWE4NjgtZDhjMWQ4Y2JkZTU5XkEyXkFqcGdeQXVyNjY1MTg4Mzc@._V1_UX128_CR0,3,128,176_AL_.jpg"
+                    ),
+                    Movie(
+                        title = "Ahmed",
+                        image = "https://m.media-amazon.com/images/M/MV5BMGIyNTI3NWItNTJkOS00MGYyLWE4NjgtZDhjMWQ4Y2JkZTU5XkEyXkFqcGdeQXVyNjY1MTg4Mzc@._V1_UX128_CR0,3,128,176_AL_.jpg"
+                    ),
+
+                    )
+            )
         }
 
     }
@@ -108,7 +136,8 @@ class HomeFragment : Fragment() {
                 )
         )
     }
-//
+
+    //
     private fun initTopRatedRecycler() {
         _topRatedAdapter = TopRatedAdapter()
         binding.recyclerViewTopRating.apply {
@@ -118,18 +147,60 @@ class HomeFragment : Fragment() {
                     orientation = RecyclerView.HORIZONTAL
                 }
             setHasFixedSize(true)
+            topRatedAdapter.setMoviesTopRated(
+                arrayListOf(
+                    TopRatedMovie(
+                        title = "Ahmed",
+                        image = "https://m.media-amazon.com/images/M/MV5BMGIyNTI3NWItNTJkOS00MGYyLWE4NjgtZDhjMWQ4Y2JkZTU5XkEyXkFqcGdeQXVyNjY1MTg4Mzc@._V1_UX128_CR0,3,128,176_AL_.jpg"
+                    ),
+                    TopRatedMovie(
+                        title = "Mohamed",
+                        image = "https://m.media-amazon.com/images/M/MV5BMGIyNTI3NWItNTJkOS00MGYyLWE4NjgtZDhjMWQ4Y2JkZTU5XkEyXkFqcGdeQXVyNjY1MTg4Mzc@._V1_UX128_CR0,3,128,176_AL_.jpg"
+                    ),
+                    TopRatedMovie(
+                        title = "Ahmed",
+                        image = "https://m.media-amazon.com/images/M/MV5BMGIyNTI3NWItNTJkOS00MGYyLWE4NjgtZDhjMWQ4Y2JkZTU5XkEyXkFqcGdeQXVyNjY1MTg4Mzc@._V1_UX128_CR0,3,128,176_AL_.jpg"
+                    ),
+                    TopRatedMovie(
+                        title = "Ahmed",
+                        image = "https://m.media-amazon.com/images/M/MV5BMGIyNTI3NWItNTJkOS00MGYyLWE4NjgtZDhjMWQ4Y2JkZTU5XkEyXkFqcGdeQXVyNjY1MTg4Mzc@._V1_UX128_CR0,3,128,176_AL_.jpg"
+                    ),
+
+
+                    )
+            )
         }
     }
-//
+
+    //
     private fun initTopMoviesRecycler() {
         _boxOfficeAdapter = BoxOfficeAdapter()
-        binding.recyclerViewTopRating.apply {
+        binding.recyclerViewTopBoxOffice.apply {
             adapter = boxOfficeAdapter
             layoutManager =
                 LinearLayoutManager(context).apply {
                     orientation = RecyclerView.VERTICAL
                 }
             setHasFixedSize(true)
+            boxOfficeAdapter.setTopMoviesList(
+                arrayListOf(
+
+                    BoxOfficeMovie(
+                        title = "Mohamed",
+                        rank = "1",
+                        weekend = "$23M",
+                        image = "https://m.media-amazon.com/images/M/MV5BMGIyNTI3NWItNTJkOS00MGYyLWE4NjgtZDhjMWQ4Y2JkZTU5XkEyXkFqcGdeQXVyNjY1MTg4Mzc@._V1_UX128_CR0,3,128,176_AL_.jpg"
+                    ),
+                    BoxOfficeMovie(
+                        title = "Ahmed",
+                        rank = "2",
+                        weekend = "$23M",
+
+                        image = "https://m.media-amazon.com/images/M/MV5BMGIyNTI3NWItNTJkOS00MGYyLWE4NjgtZDhjMWQ4Y2JkZTU5XkEyXkFqcGdeQXVyNjY1MTg4Mzc@._V1_UX128_CR0,3,128,176_AL_.jpg"
+                    ),
+
+                    )
+            )
         }
     }
 
@@ -137,5 +208,9 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        _comingAdapter = null
+        _boxOfficeAdapter = null
+        _inTheatreAdapter = null
+        _topRatedAdapter = null
     }
 }
