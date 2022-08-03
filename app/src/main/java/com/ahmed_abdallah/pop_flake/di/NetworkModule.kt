@@ -12,7 +12,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 object NetworkModule {
-    private const val baseUrl = "//https://imdb-api.com/en/API/"
+    private const val baseUrl = "https://imdb-api.com/en/API/"
 
     @Singleton
     @Provides

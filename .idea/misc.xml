@@ -4,8 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.17552083333333332" />
+        <entry key="app/src/main/res/layout/brands_layout.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.17552083333333332" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.17552083333333332" />
@@ -15,7 +18,7 @@
         <entry key="app/src/main/res/layout/movie_layout.xml" value="0.1" />
         <entry key="app/src/main/res/layout/search_movie.xml" value="0.16666666666666666" />
         <entry key="app/src/main/res/layout/top_box_layout.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/trailer_layout.xml" value="0.16666666666666666" />
+        <entry key="app/src/main/res/layout/trailer_layout.xml" value="0.1" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.17552083333333332" />
         <entry key="app/src/main/res/menu/opt_menu.xml" value="0.17239583333333333" />
       </map>

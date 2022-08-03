@@ -25,6 +25,7 @@ class InTheatreAdapter : RecyclerView.Adapter<InTheatreAdapter.InTheatreViewHold
 
         private val movie get() = movies[bindingAdapterPosition]
 
+        @SuppressLint("SetTextI18n")
         fun bindData() {
             Glide.with(binding.root)
                 .load(movie.image)
@@ -34,20 +35,25 @@ class InTheatreAdapter : RecyclerView.Adapter<InTheatreAdapter.InTheatreViewHold
                 handleRatingViews(this)
                 if (movie.runtimeMins != null) {
                     txtTime.text =
-                        "${(movie.runtimeMins) as Int / 60} h ${(movie.runtimeMins) as Int % 60}"
+                        "${(movie.runtimeMins)?.toInt()?.div(60)} h ${(movie.runtimeMins)?.toInt()
+                            ?.rem(60)}"
                 }
                 movie.year?.let{
                     dateMovie.text = it
                 }
+                movie.contentRating?.let{
+                    txtContentRating.text = it
+                }
+
             }
         }
 
         private fun handleRatingViews(binding: MovieLayoutBinding) {
             movie.imDbRating?.let {
-                changeVisibility(true, binding)
+                changeVisibility(false, binding)
                 binding.txtRating.text = it
             } ?: run {
-                changeVisibility(false, binding)
+                changeVisibility(true, binding)
             }
         }
 

@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
+import com.ahmed_abdallah.pop_flake.R
 import com.ahmed_abdallah.pop_flake.databinding.MovieLayoutBinding
 import com.ahmed_abdallah.pop_flake.pojo.Movie
 import com.bumptech.glide.Glide
@@ -27,27 +29,40 @@ class ComingAdapter : RecyclerView.Adapter<ComingAdapter.ComingViewHolder>() {
         private val movie get() = movies[bindingAdapterPosition]
 
         fun bindData() {
-            Glide.with(binding.root)
-                .load(movie.image)
-                .into(binding.imgMovie)
+            movie.image?.let {
+                Glide.with(binding.root)
+                    .load(it)
+                    .into(binding.imgMovie)
+            }
+//                ?: run {
+//                binding.imgMovie.setImageDrawable(
+//                    (AppCompatResources.getDrawable(
+//                        binding.root.context,
+//                        R.drawable.dummy
+//                    ))
+//                )
+//            }
+
             with(binding) {
                 txtMovieName.text = movie.title ?: "None"
                 handleRatingViews(this)
                 dateMovie.text = movie.year
-                movie.year?.let{
+                movie.year?.let {
                     dateMovie.text = it
+                }
+                movie.contentRating?.let{
+                    txtContentRating.text = it
                 }
             }
         }
 
         private fun handleRatingViews(binding: MovieLayoutBinding) {
-//            movie.imDbRating?.let {
-//                changeVisibility(true, binding)
-//                binding.txtRating.text = it
-//            } ?: run {
-//                changeVisibility(false, binding)
-//            }
-            changeVisibility(true,binding)
+            movie.imDbRating?.let {
+                changeVisibility(false, binding)
+                binding.txtRating.text = it
+            } ?: run {
+                changeVisibility(true, binding)
+            }
         }
 
         private fun changeVisibility(isRatingNull: Boolean, binding: MovieLayoutBinding) {

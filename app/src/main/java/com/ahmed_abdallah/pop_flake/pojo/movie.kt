@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class MovieAPI(
 
-    @SerializedName("items") var items: ArrayList<Movie> = arrayListOf()
+    @SerializedName("items") var items: List<Movie> = arrayListOf()
 
 )
 
@@ -25,10 +25,5 @@ data class Movie(
     @SerializedName("imDbRatingCount") var imDbRatingCount: String? = null,
     @SerializedName("metacriticRating") var metacriticRating: String? = null,
     @SerializedName("genres") var genres: String? = null,
-    @SerializedName("genreList") var genreList: ArrayList<String> = arrayListOf(),
-    @SerializedName("directors") var directors: String? = null,
-    @SerializedName("directorList") var directorList: ArrayList<String> = arrayListOf(),
-    @SerializedName("stars") var stars: String? = null,
-    @SerializedName("starList") var starList: ArrayList<String> = arrayListOf()
 
 )

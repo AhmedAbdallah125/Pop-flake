@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class TopRatedMovieAPI(
 
-    @SerializedName("items") var items: ArrayList<TopRatedMovie> = arrayListOf(),
+    @SerializedName("items") var items: List<TopRatedMovie> = arrayListOf(),
 
     )
 

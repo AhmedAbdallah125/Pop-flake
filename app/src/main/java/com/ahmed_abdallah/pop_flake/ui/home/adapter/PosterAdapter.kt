@@ -1,73 +1,53 @@
-//package com.ahmed_abdallah.pop_flake.ui.home.adapter
-//
-//import android.annotation.SuppressLint
-//import android.view.LayoutInflater
-//import android.view.View
-//import android.view.ViewGroup
-//import androidx.recyclerview.widget.RecyclerView
-//import com.ahmed_abdallah.pop_flake.databinding.MovieLayoutBinding
-//import com.ahmed_abdallah.pop_flake.pojo.Movie
-//import com.bumptech.glide.Glide
-//
-//class PosterAdapter : RecyclerView.Adapter<ComingAdapter.ComingViewHolder>() {
-//
-//    private var movies: List<Movie> = emptyList()
-//
-//    @SuppressLint("NotifyDataSetChanged")
-//    fun setMoviesComingSoon(movies: List<Movie>) {
-//        this.movies = movies
-//        notifyDataSetChanged()
-//    }
-//
-//
-//    inner class ComingViewHolder(private val binding: MovieLayoutBinding) :
-//        RecyclerView.ViewHolder(binding.root) {
-//
-//        private val movie get() = movies[bindingAdapterPosition]
-//
-//        fun bindData() {
-//            Glide.with(binding.root)
-//                .load(movie.image)
-//                .into(binding.imgMovie)
-//            with(binding) {
-//                txtMovieName.text = movie.title ?: "None"
-//                handleRatingViews(this)
-//            }
-//        }
-//
-//        private fun handleRatingViews(binding: MovieLayoutBinding) {
-//            movie.imDbRating?.let {
-//                changeVisibility(true, binding)
-//                binding.txtRating.text = it
-//            } ?: run {
-//                changeVisibility(false, binding)
-//            }
-//        }
-//
-//        private fun changeVisibility(isRatingNull: Boolean, binding: MovieLayoutBinding) {
-//            with(binding) {
-//                if (isRatingNull) {
-//                    imageView.visibility = View.INVISIBLE
-//                    txtRating.visibility = View.INVISIBLE
-//                } else {
-//                    imageView.visibility = View.VISIBLE
-//                    txtRating.visibility = View.VISIBLE
-//                }
-//            }
-//        }
-//    }
-//
-//    override fun onCreateViewHolder(
-//        parent: ViewGroup,
-//        viewType: Int
-//    ) =
-//        ComingViewHolder(
-//            MovieLayoutBinding.inflate(LayoutInflater.from(parent.context))
-//        )
-//
-//
-//    override fun onBindViewHolder(holder: ComingViewHolder, position: Int) = holder.bindData()
-//
-//
-//    override fun getItemCount() = movies.size
-//}
+package com.ahmed_abdallah.pop_flake.ui.home.adapter
+
+import android.annotation.SuppressLint
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.ahmed_abdallah.pop_flake.databinding.TrailerLayoutBinding
+import com.ahmed_abdallah.pop_flake.pojo.PosterAPI
+import com.ahmed_abdallah.pop_flake.pojo.Trailer
+import com.bumptech.glide.Glide
+
+class PosterAdapter : RecyclerView.Adapter<PosterAdapter.PosterViewHolder>() {
+
+    private var headerList: List<Pair<PosterAPI, Trailer>> = emptyList()
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setMoviesComingSoon(movies: List<Pair<PosterAPI, Trailer>>) {
+        this.headerList = movies
+        notifyDataSetChanged()
+    }
+
+
+    inner class PosterViewHolder(private val binding: TrailerLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        private val header get() = headerList[bindingAdapterPosition]
+
+        fun bindData() {
+            Glide.with(binding.root)
+                .load(header.second.thumbnailUrl)
+                .into(binding.imgTrailer)
+            binding.txtMovieTiltle.text = header.second.fullTitle
+            Glide.with(binding.root)
+                .load(header.first.posters[0].link  )
+                .into(binding.imgPoster)
+        }
+
+    }
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ) =
+        PosterViewHolder(
+            TrailerLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        )
+
+
+    override fun onBindViewHolder(holder: PosterViewHolder, position: Int) = holder.bindData()
+
+
+    override fun getItemCount() = headerList.size
+}

@@ -1,16 +1,12 @@
 package com.ahmed_abdallah.pop_flake.model.data.remoteSource
 
-import com.ahmed_abdallah.pop_flake.pojo.MovieAPI
-import com.ahmed_abdallah.pop_flake.pojo.SearchResultAPI
-import com.ahmed_abdallah.pop_flake.pojo.TopMoviesOfficeAPI
-import com.ahmed_abdallah.pop_flake.pojo.TopRatedMovieAPI
+import com.ahmed_abdallah.pop_flake.pojo.*
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-private const val APIKEY = "k_hxki9v6d"
+private const val APIKEY = "k_5fkw6op6"
 
-//https://imdb-api.com/en/API/InTheaters/k_hxki9v6d
 interface RetrofitServices {
     @GET("InTheaters")
     suspend fun getInTheatresMovies(
@@ -34,6 +30,19 @@ interface RetrofitServices {
 
     @GET("SearchTitle")
     suspend fun searchForMovieOrSeries(
-        @Query("apiKey") apiKey: String = APIKEY, @Query("expression") searchKey: String
-    ): Response<SearchResultAPI>
+        @Query("apiKey") apiKey: String = APIKEY,
+        @Query("expression") searchKey: String
+        ): Response<SearchResultAPI>
+
+    @GET("Trailer")
+    suspend fun searchForTrailer(
+        @Query("apiKey") apiKey: String = APIKEY,
+        @Query("id") searchKey: String
+    ): Response<Trailer>
+
+    @GET("Posters")
+    suspend fun searchForPoster(
+        @Query("apiKey") apiKey: String = APIKEY,
+        @Query("id") searchKey: String
+    ): Response<PosterAPI>
 }

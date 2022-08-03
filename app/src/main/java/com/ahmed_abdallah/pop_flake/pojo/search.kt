@@ -6,7 +6,7 @@ data class SearchResultAPI(
 
     @SerializedName("searchType") var searchType: String? = null,
     @SerializedName("expression") var expression: String? = null,
-    @SerializedName("results") var results: ArrayList<SearchResult> = arrayListOf(),
+    @SerializedName("results") var results: List<SearchResult> = arrayListOf(),
     @SerializedName("errorMessage") var errorMessage: String? = null
 
 )
