@@ -44,9 +44,21 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
+        view()
+    }
+
+    private fun view() {
         initSearchRecycler()
         handleSearchResults()
-        //circular
+        handleProgress()
+    }
+
+    private fun handleProgress() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.showProgress.collect { visible ->
+                handleViewsVisibility(visible)
+            }
+        }
     }
 
     private fun handleSearchResults() {
@@ -54,17 +66,11 @@ class SearchFragment : Fragment() {
             viewModel.resultList.buffer().collect { result ->
                 when (result) {
                     ResultState.EmptyResult -> {
-                        handleViewsVisibility(false)
                         searchAdapter.setSearchMovieList(emptyList())
                     }
                     is ResultState.Error -> {
-                        handleViewsVisibility(false)
-                    }
-                    ResultState.Loading -> {
-                        handleViewsVisibility(true)
                     }
                     is ResultState.Success -> {
-                        handleViewsVisibility(false)
                         searchAdapter.setSearchMovieList(result.data)
                     }
                 }
@@ -129,15 +135,16 @@ class SearchFragment : Fragment() {
             setHasFixedSize(true)
         }
     }
+    private val urlWeb = "https://www.imdb.com/title/"
+    private val openDetailsWebView: (String) -> Unit = { id ->
+        val action = SearchFragmentDirections.actionNavigationDashboardToWebViewFragment(urlWeb.plus(id))
+        findNavController().navigate(action)
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
         _searchAdapter = null
     }
-    private val urlWeb = "https://www.imdb.com/title/"
-    private val openDetailsWebView: (String) -> Unit = { id ->
-        val action = SearchFragmentDirections.actionNavigationDashboardToWebViewFragment(urlWeb.plus(id))
-        findNavController().navigate(action)
-    }
+
 }

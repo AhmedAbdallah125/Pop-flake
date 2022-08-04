@@ -14,9 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.ahmed_abdallah.pop_flake.Utils.ResultState
+import com.ahmed_abdallah.pop_flake.Utils.isConnected
+import com.ahmed_abdallah.pop_flake.Utils.showSnack
 import com.ahmed_abdallah.pop_flake.databinding.FragmentHomeBinding
 import com.ahmed_abdallah.pop_flake.ui.home.adapter.*
 import com.ahmed_abdallah.pop_flake.ui.home.viewModel.HomeViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -64,24 +67,32 @@ class HomeFragment : Fragment() {
         initRecycles()
         view()
         handleRefresher()
+        handleSnackBar()
     }
+
+    private fun handleSnackBar() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.showSnackBar.collect {
+                if (it)
+                   showSnack(message = "Bad Connection")
+            }
+        }
+    }
+
 
     private fun handleRefresher() {
         binding.refreshing.setOnRefreshListener {
-            viewModel.refreshData()
-//            if(isConnected(requireContext())){
-//                getRefreshData()
-//            }else{
-//                Toast.makeText(
-//                    requireContext(),
-//                    getString(R.string.YMCN),
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//            }
+            if (isConnected(requireContext())) {
+                viewModel.refreshData()
+                viewModel.resetSnack()
+            } else
+                viewModel.finishLoading()
+
             binding.refreshing.isRefreshing = false
 
         }
     }
+
 
     private fun requestData() {
         viewModel.getInComingMovies()
@@ -92,13 +103,17 @@ class HomeFragment : Fragment() {
     }
 
     private fun view() {
-        requestData()
-        handleProgress()
-        handleInTheatresMovies()
-        handleComingMovies()
-        handleTopRatedMovies()
-        handleBoxOfficesMovies()
-        handleViewPager()
+        if (isConnected(requireContext())) {
+            requestData()
+            handleProgress()
+            handleInTheatresMovies()
+            handleComingMovies()
+            handleTopRatedMovies()
+            handleBoxOfficesMovies()
+            handleViewPager()
+            viewModel.resetSnack()
+        } else
+            viewModel.finishLoading()
 
     }
 
@@ -277,7 +292,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initViewPager() {
-        _posterAdapter = PosterAdapter(openTrailer,openPoster)
+        _posterAdapter = PosterAdapter(openTrailer, openPoster)
         binding.viewPager.adapter = posterAdapter
 //        binding.viewPager.autoScroll(3000)
     }
@@ -372,6 +387,10 @@ class HomeFragment : Fragment() {
         findNavController().navigate(action)
     }
 
+    override fun onStop() {
+        super.onStop()
+        viewModel.resetSnack()
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

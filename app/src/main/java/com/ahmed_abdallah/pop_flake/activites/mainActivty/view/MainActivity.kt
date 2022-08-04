@@ -1,17 +1,17 @@
-package com.ahmed_abdallah.pop_flake
+package com.ahmed_abdallah.pop_flake.activites.mainActivty.view
 
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.ahmed_abdallah.pop_flake.R
 import com.ahmed_abdallah.pop_flake.databinding.ActivityMainBinding
-import com.ahmed_abdallah.pop_flake.viewModel.MainViewModel
+import com.ahmed_abdallah.pop_flake.activites.mainActivty.viewModel.MainViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 

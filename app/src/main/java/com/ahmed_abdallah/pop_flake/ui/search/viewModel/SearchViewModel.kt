@@ -19,20 +19,27 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(private val repository: IRepository) : ViewModel() {
     private val _resultList = MutableStateFlow<ResultState<List<SearchResult>>>(EmptyResult)
     val resultList get() = _resultList.asStateFlow()
+
+    private val _showProgress: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val showProgress = _showProgress.asStateFlow()
     fun searchForSeriesOrMovies(searchKey: StateFlow<String>) {
         viewModelScope.launch {
+            _showProgress.emit(true)
             searchKey.debounce(100)
                 .distinctUntilChanged().collect {
-                    if (it.isNotEmpty())
+                    if (it.isNotEmpty()) {
                         search(it)
-                    else
+                    } else {
                         _resultList.emit(EmptyResult)
+                        _showProgress.emit(false)
+                    }
                 }
         }
     }
 
     fun search(key: String) {
         viewModelScope.launch(Dispatchers.IO) {
+            _showProgress.emit(true)
             val res = async {
                 repository.searchForMovieOrSeries(key)
             }
@@ -42,13 +49,15 @@ class SearchViewModel @Inject constructor(private val repository: IRepository) :
 
     private suspend fun sendResponseBack(response: NetworkResponse<SearchResultAPI>) {
         //indicator
-        _resultList.emit(ResultState.Loading)
+        _showProgress.emit(true)
 
         when (response) {
             is NetworkResponse.FailureResponse -> {
+                _showProgress.emit(false)
                 _resultList.emit(ResultState.Error(response.errorString))
             }
             is NetworkResponse.SuccessResponse -> {
+                _showProgress.emit(false)
                 if (!response.data.results.isNullOrEmpty()) {
                     _resultList.emit(ResultState.Success(response.data.results))
                 } else {

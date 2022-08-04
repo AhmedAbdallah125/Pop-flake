@@ -44,6 +44,9 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow<ResultState<List<Pair<PosterAPI, Trailer>>>>(ResultState.Loading)
     val headerShows get() = _headerShows.asStateFlow()
     private val pairList = mutableListOf<Pair<PosterAPI, Trailer>>()
+
+    private val _showSnackBar: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val showSnackBar = _showSnackBar.asStateFlow()
     fun getHeaderShows() {
 
         viewModelScope.launch(Dispatchers.IO) {
@@ -175,6 +178,19 @@ class HomeViewModel @Inject constructor(
         getInBoxOfficeMovies()
         getTopRatedMovies()
         getInComingMovies()
+    }
+
+    fun finishLoading() {
+        viewModelScope.launch {
+            _progressVisibility.emit(false)
+            _showSnackBar.emit(true)
+        }
+    }
+
+    fun resetSnack() {
+        viewModelScope.launch {
+            _showSnackBar.emit(false)
+        }
     }
 
 }
