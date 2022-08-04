@@ -68,6 +68,7 @@ class HomeFragment : Fragment() {
 
     private fun handleRefresher() {
         binding.refreshing.setOnRefreshListener {
+            viewModel.refreshData()
 //            if(isConnected(requireContext())){
 //                getRefreshData()
 //            }else{
@@ -77,7 +78,6 @@ class HomeFragment : Fragment() {
 //                    Toast.LENGTH_SHORT
 //                ).show()
 //            }
-            requestData()
             binding.refreshing.isRefreshing = false
 
         }

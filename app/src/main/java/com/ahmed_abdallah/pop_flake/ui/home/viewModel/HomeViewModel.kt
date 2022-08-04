@@ -161,4 +161,20 @@ class HomeViewModel @Inject constructor(
         _progressVisibility.emit(false)
     }
 
+    fun refreshData() {
+        viewModelScope.launch {
+            _headerShows.emit(ResultState.EmptyResult)
+            _comingMovies.emit(ResultState.EmptyResult)
+            _inTheatresMovies.emit(ResultState.EmptyResult)
+            _topRatedMovies.emit(ResultState.EmptyResult)
+            _boxOfficeMovies.emit(ResultState.EmptyResult)
+            _progressVisibility.emit(true)
+        }
+        getInTheatreMovies()
+        getHeaderShows()
+        getInBoxOfficeMovies()
+        getTopRatedMovies()
+        getInComingMovies()
+    }
+
 }
