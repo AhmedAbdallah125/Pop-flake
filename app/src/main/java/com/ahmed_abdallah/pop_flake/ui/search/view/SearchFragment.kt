@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ahmed_abdallah.pop_flake.R
 import com.ahmed_abdallah.pop_flake.Utils.ResultState
+import com.ahmed_abdallah.pop_flake.Utils.showSnack
 import com.ahmed_abdallah.pop_flake.databinding.FragmentSearchBinding
 import com.ahmed_abdallah.pop_flake.ui.home.view.HomeFragmentDirections
 import com.ahmed_abdallah.pop_flake.ui.search.adapter.SearchAdapter
@@ -69,6 +70,7 @@ class SearchFragment : Fragment() {
                         searchAdapter.setSearchMovieList(emptyList())
                     }
                     is ResultState.Error -> {
+                        showSnack(result.errorString)
                     }
                     is ResultState.Success -> {
                         searchAdapter.setSearchMovieList(result.data)

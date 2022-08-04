@@ -1,4 +1,4 @@
-package com.ahmed_abdallah.pop_flake.ui.settting
+package com.ahmed_abdallah.pop_flake.ui.settting.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,6 +12,8 @@ class SettingViewModel @Inject constructor(private val repository: IRepository) 
 
     private val _mode: MutableLiveData<Int> = MutableLiveData()
     val mode = _mode as LiveData<Int>
+
+
     fun getMode() {
         _mode.postValue(repository.getMode())
     }
@@ -19,4 +21,8 @@ class SettingViewModel @Inject constructor(private val repository: IRepository) 
     fun setMode(mode: Int) {
         repository.setMode(mode)
     }
+
+
+
+
 }

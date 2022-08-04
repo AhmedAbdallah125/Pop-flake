@@ -35,7 +35,7 @@ class PosterAdapter(
                 trailerAction(header.second.link.toString())
             }
             binding.imgPoster.setOnClickListener {
-                trailerAction("${header.first.imDbId}")
+                posterAction("${header.first.imDbId}")
             }
         }
 

@@ -5,9 +5,7 @@ import android.view.LayoutInflater
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
-import com.ahmed_abdallah.pop_flake.R
 import com.ahmed_abdallah.pop_flake.databinding.MovieLayoutBinding
 import com.ahmed_abdallah.pop_flake.pojo.Movie
 import com.bumptech.glide.Glide
@@ -34,14 +32,6 @@ class ComingAdapter : RecyclerView.Adapter<ComingAdapter.ComingViewHolder>() {
                     .load(it)
                     .into(binding.imgMovie)
             }
-//                ?: run {
-//                binding.imgMovie.setImageDrawable(
-//                    (AppCompatResources.getDrawable(
-//                        binding.root.context,
-//                        R.drawable.dummy
-//                    ))
-//                )
-//            }
 
             with(binding) {
                 txtMovieName.text = movie.title ?: "None"
@@ -50,7 +40,7 @@ class ComingAdapter : RecyclerView.Adapter<ComingAdapter.ComingViewHolder>() {
                 movie.year?.let {
                     dateMovie.text = it
                 }
-                movie.contentRating?.let{
+                movie.contentRating?.let {
                     txtContentRating.text = it
                 }
             }

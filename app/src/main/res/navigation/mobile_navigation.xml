@@ -27,9 +27,13 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.ahmed_abdallah.pop_flake.ui.settting.SettingFragment"
+        android:name="com.ahmed_abdallah.pop_flake.ui.settting.view.SettingFragment"
         android:label="@string/title_setting"
-        tools:layout="@layout/fragment_setting" />
+        tools:layout="@layout/fragment_setting" >
+        <action
+            android:id="@+id/action_navigation_notifications_to_formFragment"
+            app:destination="@id/formFragment" />
+    </fragment>
     <fragment
         android:id="@+id/webViewFragment"
         android:name="com.ahmed_abdallah.pop_flake.WebViewFragment"
@@ -39,4 +43,9 @@
             android:name="linkWeb"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/formFragment"
+        android:name="com.ahmed_abdallah.pop_flake.ui.form.view.FormFragment"
+        android:label="@string/complain_form"
+        tools:layout="@layout/fragment_form" />
 </navigation>

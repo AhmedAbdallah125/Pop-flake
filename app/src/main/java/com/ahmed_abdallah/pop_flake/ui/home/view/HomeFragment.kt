@@ -19,7 +19,6 @@ import com.ahmed_abdallah.pop_flake.Utils.showSnack
 import com.ahmed_abdallah.pop_flake.databinding.FragmentHomeBinding
 import com.ahmed_abdallah.pop_flake.ui.home.adapter.*
 import com.ahmed_abdallah.pop_flake.ui.home.viewModel.HomeViewModel
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -57,8 +56,6 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -74,7 +71,7 @@ class HomeFragment : Fragment() {
         lifecycleScope.launchWhenStarted {
             viewModel.showSnackBar.collect {
                 if (it)
-                   showSnack(message = "Bad Connection")
+                    showSnack(message = "Bad Connection")
             }
         }
     }
@@ -123,7 +120,6 @@ class HomeFragment : Fragment() {
                 when (result) {
                     ResultState.EmptyResult -> {
                         Toast.makeText(requireContext(), "Empty", Toast.LENGTH_SHORT)
-
                         posterAdapter.setMoviesComingSoon(emptyList())
 
                     }
@@ -135,10 +131,12 @@ class HomeFragment : Fragment() {
                         )
                     }
                     ResultState.Loading -> {
+                        binding.viewPager.autoScroll(0, false)
                         Toast.makeText(requireContext(), "Looo", Toast.LENGTH_SHORT)
                     }
                     is ResultState.Success -> {
                         posterAdapter.setMoviesComingSoon(result.data)
+                        binding.viewPager.autoScroll(4000, true)
 
                     }
                 }
@@ -294,18 +292,18 @@ class HomeFragment : Fragment() {
     private fun initViewPager() {
         _posterAdapter = PosterAdapter(openTrailer, openPoster)
         binding.viewPager.adapter = posterAdapter
-//        binding.viewPager.autoScroll(3000)
     }
 
-    fun ViewPager2.autoScroll(interval: Long) {
+    fun ViewPager2.autoScroll(interval: Long, loop: Boolean) {
         var index = 0
         val count = adapter?.itemCount ?: 0
         lifecycleScope.launchWhenStarted {
-            while (true) {
+            while (loop) {
                 withContext(Dispatchers.IO) {
                     delay(interval)
                     withContext(Dispatchers.Main) {
-                        setCurrentItem(index++ % count, true)
+                        if (count != 0)
+                            setCurrentItem(index++ % count, true)
                     }
                 }
             }
@@ -391,6 +389,7 @@ class HomeFragment : Fragment() {
         super.onStop()
         viewModel.resetSnack()
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

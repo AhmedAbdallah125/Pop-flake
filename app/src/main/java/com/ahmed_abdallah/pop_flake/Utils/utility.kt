@@ -4,8 +4,10 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputLayout
 
 fun isConnected(context: Context): Boolean {
     val connectivityManager =
@@ -34,7 +36,12 @@ fun isConnected(context: Context): Boolean {
     }
     return false
 }
-fun Fragment.showSnack(message:String){
+
+fun Fragment.showSnack(message: String) {
     Snackbar.make(view!!.rootView, message, Snackbar.LENGTH_SHORT)
         .show()
 }
+
+    fun EditText.trimText(): String {
+        return this.text.toString().trim()
+    }

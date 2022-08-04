@@ -35,13 +35,15 @@ class InTheatreAdapter : RecyclerView.Adapter<InTheatreAdapter.InTheatreViewHold
                 handleRatingViews(this)
                 if (movie.runtimeMins != null) {
                     txtTime.text =
-                        "${(movie.runtimeMins)?.toInt()?.div(60)} h ${(movie.runtimeMins)?.toInt()
-                            ?.rem(60)}"
+                        "${(movie.runtimeMins)?.toInt()?.div(60)} h ${
+                            (movie.runtimeMins)?.toInt()
+                                ?.rem(60)
+                        }"
                 }
-                movie.year?.let{
+                movie.year?.let {
                     dateMovie.text = it
                 }
-                movie.contentRating?.let{
+                movie.contentRating?.let {
                     txtContentRating.text = it
                 }
 
