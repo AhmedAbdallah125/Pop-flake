@@ -6,11 +6,13 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ahmed_abdallah.pop_flake.R
 import com.ahmed_abdallah.pop_flake.Utils.ResultState
 import com.ahmed_abdallah.pop_flake.databinding.FragmentSearchBinding
+import com.ahmed_abdallah.pop_flake.ui.home.view.HomeFragmentDirections
 import com.ahmed_abdallah.pop_flake.ui.search.adapter.SearchAdapter
 import com.ahmed_abdallah.pop_flake.ui.search.viewModel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -117,7 +119,7 @@ class SearchFragment : Fragment() {
 
 
     private fun initSearchRecycler() {
-        _searchAdapter = SearchAdapter()
+        _searchAdapter = SearchAdapter(openDetailsWebView)
         binding.recyclerSearch.apply {
             adapter = searchAdapter
             layoutManager =
@@ -132,5 +134,10 @@ class SearchFragment : Fragment() {
         super.onDestroyView()
         _binding = null
         _searchAdapter = null
+    }
+    private val urlWeb = "https://www.imdb.com/title/"
+    private val openDetailsWebView: (String) -> Unit = { id ->
+        val action = SearchFragmentDirections.actionNavigationDashboardToWebViewFragment(urlWeb.plus(id))
+        findNavController().navigate(action)
     }
 }

@@ -2,7 +2,6 @@ package com.ahmed_abdallah.pop_flake.model.data.repository
 
 import com.ahmed_abdallah.pop_flake.Utils.NetworkResponse
 import com.ahmed_abdallah.pop_flake.pojo.*
-import retrofit2.Response
 
 
 interface IRepository {
@@ -19,15 +18,18 @@ interface IRepository {
     ): NetworkResponse<TopMoviesOfficeAPI>
 
     suspend fun searchForMovieOrSeries(
-        searchKey:String
+        searchKey: String
     ): NetworkResponse<SearchResultAPI>
 
 
     suspend fun searchForTrailer(
-        searchKey:String
+        searchKey: String
     ): NetworkResponse<Trailer>
 
     suspend fun searchForPoster(
-        searchKey:String
+        searchKey: String
     ): NetworkResponse<PosterAPI>
+
+    fun setMode(mode: Int)
+    fun getMode(): Int
 }

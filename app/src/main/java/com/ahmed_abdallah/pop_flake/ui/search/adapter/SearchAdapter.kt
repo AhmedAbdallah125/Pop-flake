@@ -8,7 +8,9 @@ import com.ahmed_abdallah.pop_flake.databinding.SearchMovieBinding
 import com.ahmed_abdallah.pop_flake.pojo.SearchResult
 import com.bumptech.glide.Glide
 
-class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
+class SearchAdapter(
+    private inline val action: (String) -> Unit
+) : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
     private var searchResultList: List<SearchResult> = emptyList()
 
     @SuppressLint("NotifyDataSetChanged")
@@ -34,6 +36,9 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
             movieDescription.text = item.description
             movieTitle.text = item.title
             Glide.with(root).load(item.image).into(movieImg)
+        }
+        holder.binding.root.setOnClickListener {
+            action("${item.id}")
         }
 
     }

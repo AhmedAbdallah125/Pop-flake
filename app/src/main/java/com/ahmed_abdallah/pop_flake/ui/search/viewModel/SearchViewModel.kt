@@ -43,12 +43,13 @@ class SearchViewModel @Inject constructor(private val repository: IRepository) :
     private suspend fun sendResponseBack(response: NetworkResponse<SearchResultAPI>) {
         //indicator
         _resultList.emit(ResultState.Loading)
+
         when (response) {
             is NetworkResponse.FailureResponse -> {
                 _resultList.emit(ResultState.Error(response.errorString))
             }
             is NetworkResponse.SuccessResponse -> {
-                if (response.data.results.isNotEmpty()) {
+                if (!response.data.results.isNullOrEmpty()) {
                     _resultList.emit(ResultState.Success(response.data.results))
                 } else {
                     _resultList.emit(EmptyResult)

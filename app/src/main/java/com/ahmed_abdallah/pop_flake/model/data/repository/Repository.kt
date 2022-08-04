@@ -1,11 +1,10 @@
 package com.ahmed_abdallah.pop_flake.model.data.repository
 
-import android.util.Log
 import com.ahmed_abdallah.pop_flake.Utils.NetworkResponse
 import com.ahmed_abdallah.pop_flake.Utils.NetworkResponse.FailureResponse
 import com.ahmed_abdallah.pop_flake.Utils.NetworkResponse.SuccessResponse
+import com.ahmed_abdallah.pop_flake.model.data.localSource.LocalSource
 import com.ahmed_abdallah.pop_flake.model.data.remoteSource.RemoteSource
-import com.ahmed_abdallah.pop_flake.model.data.repository.IRepository
 import com.ahmed_abdallah.pop_flake.pojo.*
 import okhttp3.ResponseBody
 import org.json.JSONObject
@@ -13,7 +12,10 @@ import javax.inject.Inject
 
 private const val connectionFailure = "Bad Connection"
 
-class Repository @Inject constructor(private val remoteSource: RemoteSource) : IRepository {
+class Repository @Inject constructor(
+    private val remoteSource: RemoteSource,
+    private val localSource: LocalSource
+) : IRepository {
     override suspend fun getInTheatresMovies(): NetworkResponse<MovieAPI> {
         return try {
             val response = remoteSource.getInTheatresMovies()
@@ -95,17 +97,24 @@ class Repository @Inject constructor(private val remoteSource: RemoteSource) : I
     }
 
     override suspend fun searchForPoster(searchKey: String): NetworkResponse<PosterAPI> {
-//        return try {
+        return try {
             val response = remoteSource.searchForPoster(searchKey)
-          return  if (response.isSuccessful) {
+            return if (response.isSuccessful) {
                 SuccessResponse(response.body() ?: PosterAPI(posters = emptyList()))
             } else {
                 parseError(response.errorBody())
             }
-//        } catch (ex: Exception) {
-//            FailureResponse(connectionFailure)
-//        }
+        } catch (ex: Exception) {
+            FailureResponse(connectionFailure)
+        }
     }
+
+    override fun setMode(mode: Int) {
+        localSource.setMode(mode)
+    }
+
+    override fun getMode() = localSource.getMode()
+
 
     private fun parseError(errorBody: ResponseBody?): FailureResponse {
         return errorBody?.let {

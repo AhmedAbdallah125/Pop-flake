@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ahmed_abdallah.pop_flake.databinding.TopBoxLayoutBinding
 import com.ahmed_abdallah.pop_flake.pojo.BoxOfficeMovie
 
-class BoxOfficeAdapter : RecyclerView.Adapter<BoxOfficeAdapter.BoxViewHolder>() {
+class BoxOfficeAdapter(
+    private inline val action: (String) -> Unit
+) : RecyclerView.Adapter<BoxOfficeAdapter.BoxViewHolder>() {
     private var topMoviesList: List<BoxOfficeMovie> = emptyList()
 
     @SuppressLint("NotifyDataSetChanged")
@@ -23,7 +25,6 @@ class BoxOfficeAdapter : RecyclerView.Adapter<BoxOfficeAdapter.BoxViewHolder>() 
 
     inner class BoxViewHolder(var binding: TopBoxLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
     }
 
     override fun onBindViewHolder(holder: BoxViewHolder, position: Int) {
@@ -32,6 +33,9 @@ class BoxOfficeAdapter : RecyclerView.Adapter<BoxOfficeAdapter.BoxViewHolder>() 
             txtNum.text = item.rank
             txtProfit.text = item.weekend
             txtMovieTitle.text = item.title
+        }
+        holder.binding.root.setOnClickListener {
+            action("${item.id}")
         }
     }
 

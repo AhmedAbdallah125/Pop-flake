@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -61,16 +62,37 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initRecycles()
-//        view()
+        view()
+        handleRefresher()
     }
 
-    private fun view() {
+    private fun handleRefresher() {
+        binding.refreshing.setOnRefreshListener {
+//            if(isConnected(requireContext())){
+//                getRefreshData()
+//            }else{
+//                Toast.makeText(
+//                    requireContext(),
+//                    getString(R.string.YMCN),
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            }
+            requestData()
+            binding.refreshing.isRefreshing = false
 
+        }
+    }
+
+    private fun requestData() {
         viewModel.getInComingMovies()
         viewModel.getInBoxOfficeMovies()
         viewModel.getInTheatreMovies()
         viewModel.getTopRatedMovies()
         viewModel.getHeaderShows()
+    }
+
+    private fun view() {
+        requestData()
         handleProgress()
         handleInTheatresMovies()
         handleComingMovies()
@@ -81,33 +103,33 @@ class HomeFragment : Fragment() {
     }
 
     private fun handleViewPager() {
-            lifecycleScope.launchWhenStarted {
-                viewModel.headerShows.collect { result ->
-                    when (result) {
-                        ResultState.EmptyResult -> {
-                            Toast.makeText(requireContext(), "Empty", Toast.LENGTH_SHORT)
+        lifecycleScope.launchWhenStarted {
+            viewModel.headerShows.collect { result ->
+                when (result) {
+                    ResultState.EmptyResult -> {
+                        Toast.makeText(requireContext(), "Empty", Toast.LENGTH_SHORT)
 
-                            posterAdapter.setMoviesComingSoon(emptyList())
+                        posterAdapter.setMoviesComingSoon(emptyList())
 
-                        }
-                        is ResultState.Error -> {
-                            Toast.makeText(
-                                requireContext(),
-                                "Error${result.errorString}",
-                                Toast.LENGTH_SHORT
-                            )
-                        }
-                        ResultState.Loading -> {
-                            Toast.makeText(requireContext(), "Looo", Toast.LENGTH_SHORT)
-                        }
-                        is ResultState.Success -> {
-                            posterAdapter.setMoviesComingSoon(result.data)
+                    }
+                    is ResultState.Error -> {
+                        Toast.makeText(
+                            requireContext(),
+                            "Error${result.errorString}",
+                            Toast.LENGTH_SHORT
+                        )
+                    }
+                    ResultState.Loading -> {
+                        Toast.makeText(requireContext(), "Looo", Toast.LENGTH_SHORT)
+                    }
+                    is ResultState.Success -> {
+                        posterAdapter.setMoviesComingSoon(result.data)
 
-                        }
                     }
                 }
             }
         }
+    }
 
 
     private fun handleBoxOfficesMovies() {
@@ -255,7 +277,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initViewPager() {
-        _posterAdapter = PosterAdapter()
+        _posterAdapter = PosterAdapter(openTrailer,openPoster)
         binding.viewPager.adapter = posterAdapter
 //        binding.viewPager.autoScroll(3000)
     }
@@ -268,7 +290,7 @@ class HomeFragment : Fragment() {
                 withContext(Dispatchers.IO) {
                     delay(interval)
                     withContext(Dispatchers.Main) {
-                      setCurrentItem(index++%count,true)
+                        setCurrentItem(index++ % count, true)
                     }
                 }
             }
@@ -324,7 +346,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initTopMoviesRecycler() {
-        _boxOfficeAdapter = BoxOfficeAdapter()
+        _boxOfficeAdapter = BoxOfficeAdapter(openDetailsWebView)
         binding.recyclerViewTopBoxOffice.apply {
             adapter = boxOfficeAdapter
             layoutManager =
@@ -335,6 +357,20 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private val urlWeb = "https://www.imdb.com/title/"
+    private val openDetailsWebView: (String) -> Unit = { id ->
+        val action = HomeFragmentDirections.actionNavigationHomeToWebViewFragment(urlWeb.plus(id))
+        findNavController().navigate(action)
+    }
+
+    private val openTrailer: (String) -> Unit = { linkWeb ->
+        val action = HomeFragmentDirections.actionNavigationHomeToWebViewFragment(linkWeb)
+        findNavController().navigate(action)
+    }
+    private val openPoster: (String) -> Unit = { id ->
+        val action = HomeFragmentDirections.actionNavigationHomeToWebViewFragment((urlWeb.plus(id)))
+        findNavController().navigate(action)
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

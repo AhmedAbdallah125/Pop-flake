@@ -1,4 +1,4 @@
-package com.ahmed_abdallah.pop_flake.ui.settting
+package com.ahmed_abdallah.pop_flake.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,8 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SettingViewModel @Inject constructor(private val repository: IRepository) : ViewModel() {
-
+class MainViewModel @Inject constructor(private val repository: IRepository) :ViewModel(){
     private val _mode: MutableLiveData<Int> = MutableLiveData()
     val mode = _mode as LiveData<Int>
     fun getMode() {

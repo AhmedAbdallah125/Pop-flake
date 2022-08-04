@@ -5,7 +5,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-private const val APIKEY = "k_5fkw6op6"
+private const val APIKEY = "k_vrhrajk8"
 
 interface RetrofitServices {
     @GET("InTheaters")
