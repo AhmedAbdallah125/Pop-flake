@@ -67,6 +67,36 @@ class HomeFragment : Fragment() {
         handleSnackBar()
     }
 
+    private fun initRecycles() {
+        initComingRecycler()
+        initInTheatreRecycler()
+        initTopRatedRecycler()
+        initTopMoviesRecycler()
+        initViewPager()
+    }
+    private fun view() {
+        if (isConnected(requireContext())) {
+            requestData()
+            handleProgress()
+            handleInTheatresMovies()
+            handleComingMovies()
+            handleTopRatedMovies()
+            handleBoxOfficesMovies()
+            handleViewPager()
+            viewModel.resetSnack()
+        } else
+            viewModel.finishLoading()
+    }
+
+    private fun requestData() {
+        viewModel.getInComingMovies()
+        viewModel.getInBoxOfficeMovies()
+        viewModel.getInTheatreMovies()
+        viewModel.getTopRatedMovies()
+        viewModel.getHeaderShows()
+    }
+
+
     private fun handleSnackBar() {
         lifecycleScope.launchWhenStarted {
             viewModel.showSnackBar.collect {
@@ -91,29 +121,6 @@ class HomeFragment : Fragment() {
     }
 
 
-    private fun requestData() {
-        viewModel.getInComingMovies()
-        viewModel.getInBoxOfficeMovies()
-        viewModel.getInTheatreMovies()
-        viewModel.getTopRatedMovies()
-        viewModel.getHeaderShows()
-    }
-
-    private fun view() {
-        if (isConnected(requireContext())) {
-            requestData()
-            handleProgress()
-            handleInTheatresMovies()
-            handleComingMovies()
-            handleTopRatedMovies()
-            handleBoxOfficesMovies()
-            handleViewPager()
-            viewModel.resetSnack()
-        } else
-            viewModel.finishLoading()
-
-    }
-
     private fun handleViewPager() {
         lifecycleScope.launchWhenStarted {
             viewModel.headerShows.collect { result ->
@@ -121,7 +128,6 @@ class HomeFragment : Fragment() {
                     ResultState.EmptyResult -> {
                         Toast.makeText(requireContext(), "Empty", Toast.LENGTH_SHORT)
                         posterAdapter.setMoviesComingSoon(emptyList())
-
                     }
                     is ResultState.Error -> {
                         Toast.makeText(
@@ -132,7 +138,6 @@ class HomeFragment : Fragment() {
                     }
                     ResultState.Loading -> {
                         binding.viewPager.autoScroll(0, false)
-                        Toast.makeText(requireContext(), "Looo", Toast.LENGTH_SHORT)
                     }
                     is ResultState.Success -> {
                         posterAdapter.setMoviesComingSoon(result.data)
@@ -281,13 +286,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun initRecycles() {
-        initComingRecycler()
-        initInTheatreRecycler()
-        initTopRatedRecycler()
-        initTopMoviesRecycler()
-        initViewPager()
-    }
 
     private fun initViewPager() {
         _posterAdapter = PosterAdapter(openTrailer, openPoster)
